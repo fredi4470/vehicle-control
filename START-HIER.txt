@@ -1,0 +1,85 @@
+VEHICLE CONTROL – SUPABASE-TEST
+=============================
+Diese Kopie verbindet die App mit deinem Supabase-Testprojekt.
+Nur erfundene Fahrzeuge verwenden. Bisheriger Ordner und Online-Demo bleiben getrennt.
+Eine Datenbank wird durch das Entpacken noch nicht eingerichtet.
+
+1. ZIP ENTPACKEN
+Rechtsklick auf die ZIP > Alle extrahieren.
+Den neuen Ordner Vehicle-Control-Supabase behalten. Die alte Version nicht überschreiben.
+
+2. TABELLEN EINRICHTEN
+In Supabase das richtige Projekt öffnen: qyvanasfkiawkclntvmc.
+Links SQL Editor > neue Abfrage.
+Datei sql/01-datenbank.sql in VS Code öffnen, gesamten Inhalt kopieren,
+in die Supabase-Abfrage einfügen und Run klicken.
+Erwartet: Success. Danach zeigt Table Editor die Tabellen
+vc_areas (15 Zeilen), vc_vehicles (20 Zeilen) und vc_moves (anfangs leer).
+Das Skript enthält DROP POLICY für seine eigenen Zugriffsregeln, aber kein DROP TABLE.
+Bei einer Fehlermeldung stoppen und den Meldungstext zur Prüfung schicken.
+Erneutes Ausführen setzt vorhandene Standortänderungen nicht zurück.
+
+3. APP-TESTNUTZER ANLEGEN
+Supabase > Authentication > Users > Add user > Create new user.
+Eine eigene erreichbare E-Mail und ein eigenes Testpasswort eintragen.
+Falls angeboten: Auto Confirm User für diesen manuell angelegten Testnutzer aktivieren.
+Das Passwort privat aufbewahren, nicht in Code oder Chat einfügen.
+Der Supabase-Dashboard-Account ist NICHT automatisch ein App-Account.
+
+4. TESTNUTZER FREISCHALTEN
+sql/02-testnutzer-freischalten.sql öffnen.
+DEINE-TEST-EMAIL-HIER durch exakt die E-Mail aus Schritt 3 ersetzen.
+Die einfachen Anführungszeichen beibehalten.
+Dieses Skript in einer neuen SQL-Editor-Abfrage ausführen.
+Weitere Testnutzer können durch Wiederholen von Schritt 3 und 4 hinzugefügt werden.
+Nicht freigeschaltete Konten erhalten keinen Zugang zum Bestand.
+
+5. APP AUF DEM PC STARTEN
+VS Code > File > Open Folder > Vehicle-Control-Supabase/dist auswählen.
+index.html öffnen.
+Strg+Umschalt+P > Live Preview: Show Preview (External Browser).
+Es sollte die neue Seite "Testzugang" erscheinen.
+Mit E-Mail und Testpasswort aus Schritt 3 anmelden.
+Kein Python, Node.js oder npm zur Vorschau erforderlich.
+Projektadresse und Publishable Key sind schon in dist/config.js eingetragen.
+Keinen Secret Key, service_role Key oder DB-Passwort in diese Datei schreiben.
+
+6. FUNKTION PRÜFEN
+Nach 0001 suchen: zwei Fahrzeuge, aber unterschiedliche vollständige Test-FINs.
+Eines öffnen, Parkareal ändern, speichern und F5 drücken.
+Standort und Verlauf müssen aus Supabase wieder erscheinen.
+Zusätzlich im Supabase Table Editor vc_vehicles / vc_moves kontrollieren.
+Bei zwei geöffneten Tabs: beide dasselbe Fahrzeug öffnen. Im ersten speichern.
+Der zweite darf den alten Stand nicht still überschreiben, sondern zeigt einen Konflikt.
+Dann Dialog schließen, Aktualisieren klicken und Fahrzeug neu öffnen.
+
+7. HANDY / WEITERER PC
+Diese neue Version muss auch auf dem anderen Gerät bereitgestellt werden.
+Der frühere ChatGPT-Website-Link wurde NICHT aktualisiert und nutzt weiterhin lokale Daten.
+127.0.0.1 am Handy verweist auf das Handy, nicht auf deinen PC.
+Für einen Handy-Test diese neue Version auf einer vereinbarten HTTPS-Testadresse hosten.
+Beide Geräte müssen dieselbe Supabase-Projektkonfiguration verwenden.
+Am zweiten Gerät anmelden, Aktualisieren klicken bzw. Seite neu laden.
+Keine automatische Echtzeit-Aktualisierung in dieser Version.
+
+WISSENSWERT
+- Zugang nur für explizit freigeschaltete Konten, RLS bleibt eingeschaltet.
+- Alle freigeschalteten Testnutzer sehen den gemeinsamen Testbestand.
+- Standortänderung und Verlauf werden in EINER Datenbanktransaktion gespeichert.
+- Versionsprüfung verhindert stilles Überschreiben eines inzwischen geänderten Standorts.
+- Vollständiger Verlauf bleibt in der DB, angezeigt werden die letzten 100 Änderungen.
+- In vc_moves steht actor_id für die Supabase-Nutzer-ID des Ändernden.
+- Kurzlebige Anmeldung bleibt in diesem Browser-Tab erhalten (sessionStorage).
+  Nach Ablauf des Zugriffstokens erneut anmelden; kein automatischer Token-Refresh.
+- Passwort wird nicht gespeichert. Es wird nur zur Anmeldung per HTTPS gesendet.
+- Kein öffentliches Zurücksetzen oder Erstellen von Fahrzeugen über die App.
+- Bestandsimport aus DMS, n8n-Druck, Microsoft-Anmeldung und Rollen nach Autohaus
+  sind noch nicht implementiert.
+- Der bisherige Kamera-Scanner wurde in diesem Paket nicht erweitert.
+  Auf Browsern ohne BarcodeDetector (u.a. manche iPhone-Konfigurationen)
+  weiterhin QR-ID manuell eingeben. HTTPS alleine ergänzt keinen QR-Decoder.
+
+VERIFIKATION
+JavaScript-Syntax und automatisierte Verbindungstests mit simulierten API-Antworten geprüft.
+Das SQL-Skript und ein echter Login müssen in deinem Supabase-Projekt ausgeführt/getestet werden.
+Es wurde keine Tabelle und kein Nutzer in deinem Projekt durch dieses Paket angelegt.

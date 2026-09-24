@@ -1,0 +1,8 @@
+{
+  "name": "vehicle-control-supabase-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
