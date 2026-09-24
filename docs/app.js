@@ -54,3 +54,5 @@ updateAuthUI();
 if(repo.isSignedIn()){
   if(await refresh()){const qr=new URL(location.href).searchParams.get('qr');if(qr)showQR(qr);}
 }
+
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});}
