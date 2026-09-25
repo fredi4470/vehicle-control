@@ -1,4 +1,5 @@
 import QrScanner from './vendor/qr-scanner.min.js';
+import {scanPhoto} from './photo-scanner.js?v=20260925-photo1';
 
 // All decoding runs locally, including the bundled worker fallback on iPhone.
 export function setupScanner({dialog, video, start, stop, photo, message, error, onResult}) {
@@ -103,11 +104,11 @@ export function setupScanner({dialog, video, start, stop, photo, message, error,
     message.textContent = 'QR-Code im Foto wird gelesen …';
     photo.disabled = true;
     try {
-      const result = await QrScanner.scanImage(file, {returnDetailedScanResult: true});
-      if (current === generation && dialog.open) onResult(result.data);
-    } catch {
+      const result = await scanPhoto(file, () => current !== generation || !dialog.open);
+      if (result && current === generation && dialog.open) onResult(result.data);
+    } catch (reason) {
       if (current === generation && dialog.open) {
-        error.textContent = 'Kein lesbarer QR-Code im Bild gefunden. Bitte ein scharfes Foto mit dem vollständigen QR-Code auswählen.';
+        error.textContent = reason.message || 'Das Foto konnte nicht verarbeitet werden. Bitte erneut versuchen.';
       }
     } finally {
       if (current === generation) {

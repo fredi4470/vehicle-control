@@ -1,4 +1,4 @@
-import {setupScanner} from './scanner.js?v=20260925-camera2';
+import {setupScanner} from './scanner.js?v=20260925-photo1';
 import {AREAS,searchVehicles} from './data.js';
 import {SupabaseVehicleRepository} from './repository.js';
 const repo=new SupabaseVehicleRepository();
