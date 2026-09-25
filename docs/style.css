@@ -4,3 +4,5 @@
 [hidden]{display:none!important}.login-panel{max-width:520px;margin:48px auto;padding:28px}.login-panel h1{font-size:32px}.login-panel form{display:grid;gap:12px}.login-panel input{width:100%;padding:12px;border:1px solid #b9cacc;border-radius:8px;font:inherit}.login-panel button{margin-top:12px}header{gap:12px;flex-wrap:wrap}
 
 .inventory-actions{display:flex;justify-content:flex-end;margin:-8px 0 0}.inventory-actions .secondary{font-size:14px;min-height:42px}
+
+.camera-actions{display:flex;gap:8px;flex-wrap:wrap}.photo-scan{margin-top:22px}.photo-scan input{width:100%;font-size:14px}.photo-scan .hint{display:block;line-height:1.4}#video{max-height:45dvh;object-fit:contain;background:#102d32}
