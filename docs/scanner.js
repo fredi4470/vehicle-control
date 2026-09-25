@@ -4,7 +4,7 @@ import QrScanner from './vendor/qr-scanner.min.js';
 export function setupScanner({dialog, video, start, stop, photo, message, error, onResult}) {
   let scanner = null;
   let generation = 0;
-  const instruction = 'Kamera starten oder einen QR-Code aus einem Foto lesen.';
+  const instruction = 'Kamera starten und den QR-Code am Fahrzeug scannen.';
 
   function stopCamera() {
     generation++;
@@ -27,10 +27,10 @@ export function setupScanner({dialog, video, start, stop, photo, message, error,
   function cameraError(reason) {
     const text = String(reason?.name || '') + ' ' + String(reason?.message || reason);
     if (/NotAllowed|Permission|denied|SecurityError/i.test(text)) {
-      return 'Kamerazugriff nicht erlaubt. Öffne die App direkt in Safari oder Chrome und erlaube den Kamerazugriff in den Website-Einstellungen. Alternativ kannst du ein QR-Foto auswählen.';
+      return 'Kamerazugriff nicht erlaubt. Öffne die App direkt in Safari oder Chrome und erlaube den Kamerazugriff in den Website-Einstellungen. Unter „QR-Scan funktioniert nicht?“ kannst du ein Foto auswählen.';
     }
     if (/NotFound|DevicesNotFound|Camera not found/i.test(text)) {
-      return 'Keine Kamera gefunden. Bitte ein QR-Foto auswählen oder die QR-ID eingeben.';
+      return 'Keine Kamera gefunden. Unter „QR-Scan funktioniert nicht?“ kannst du ein Foto auswählen oder die QR-ID eingeben.';
     }
     if (/NotReadable|TrackStart|Could not start/i.test(text)) {
       return 'Die Kamera konnte nicht gestartet werden. Schließe andere Kamera-Apps und versuche es erneut.';
@@ -77,7 +77,7 @@ export function setupScanner({dialog, video, start, stop, photo, message, error,
         returnDetailedScanResult: true,
         onDecodeError: reason => {
           if (current !== generation || reason === QrScanner.NO_QR_CODE_FOUND) return;
-          error.textContent = 'Der QR-Code konnte nicht gelesen werden. Bitte ein scharfes QR-Foto auswählen oder die QR-ID eingeben.';
+          error.textContent = 'Der QR-Code konnte nicht gelesen werden. Unter „QR-Scan funktioniert nicht?“ kannst du ein scharfes Foto auswählen oder die QR-ID eingeben.';
         },
       });
       scanner = instance;

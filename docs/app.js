@@ -1,4 +1,4 @@
-import {setupScanner} from './scanner.js?v=20260925-camera1';
+import {setupScanner} from './scanner.js?v=20260925-camera2';
 import {AREAS,searchVehicles} from './data.js';
 import {SupabaseVehicleRepository} from './repository.js';
 const repo=new SupabaseVehicleRepository();
@@ -17,9 +17,9 @@ $('list').onclick=e=>{const b=e.target.closest('[data-id]');if(b)openVehicle(b.d
 $('detail-content').onclick=e=>{const b=e.target.closest('[data-area]');if(!b)return;target=Number(b.dataset.area);document.querySelectorAll('[data-area]').forEach(el=>el.setAttribute('aria-pressed',String(Number(el.dataset.area)===target)));$('save').disabled=target===selected.areaId;};
 $('search').oninput=render;$('area').onchange=render;
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
-$('scan').onclick=()=>{cameraControls.reset();$('qr-input').value='';$('scanner').showModal();};
+$('scan').onclick=()=>{cameraControls.reset();$('scan-help').open=false;$('qr-input').value='';$('scanner').showModal();};
 function resolveQR(value){let code=value.trim();try{const u=new URL(code);code=u.searchParams.get('qr')||u.pathname.split('/').filter(Boolean).pop()||code;}catch{}return vehicles.find(v=>v.qrId===code||v.id===code);}
-function showQR(value){const v=resolveQR(value);if(!v){$('scan-error').textContent='Kein Fahrzeug zu diesem Code gefunden. Bitte den Fahrzeugbestand aktualisieren und den Code prüfen.';return false;}$('scanner').close();openVehicle(v.id);return true;}
+function showQR(value){const v=resolveQR(value);if(!v){$('scan-error').textContent='Der Code wurde gelesen, passt aber zu keinem Fahrzeug im geladenen Bestand. Bitte den Fahrzeug-QR-Code verwenden oder den Bestand aktualisieren.';return false;}$('scanner').close();openVehicle(v.id);return true;}
 $('qr-form').onsubmit=e=>{e.preventDefault();showQR($('qr-input').value);};
 const cameraControls=setupScanner({dialog:$('scanner'),video:$('video'),start:$('camera'),stop:$('camera-stop'),photo:$('qr-photo'),message:$('scan-message'),error:$('scan-error'),onResult:showQR});
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('detail').open&&!$('scanner').open){e.preventDefault();$('search').focus();}});

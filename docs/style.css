@@ -6,3 +6,5 @@
 .inventory-actions{display:flex;justify-content:flex-end;margin:-8px 0 0}.inventory-actions .secondary{font-size:14px;min-height:42px}
 
 .camera-actions{display:flex;gap:8px;flex-wrap:wrap}.photo-scan{margin-top:22px}.photo-scan input{width:100%;font-size:14px}.photo-scan .hint{display:block;line-height:1.4}#video{max-height:45dvh;object-fit:contain;background:#102d32}
+
+.scan-help{margin-top:24px;border-top:1px solid var(--line);padding-top:18px}.scan-help summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);padding:8px 0}.scan-help summary:focus-visible{outline:3px solid #477f17;outline-offset:3px}.scan-help .photo-scan{margin-top:16px}
