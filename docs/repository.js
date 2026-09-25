@@ -35,7 +35,7 @@ export class SupabaseVehicleRepository {
     if (!response.ok) {
       if (response.status === 401 && !publicRequest) this.clearSession();
       const message = result?.message || result?.msg || result?.error_description;
-      throw new Error(message || `Supabase meldet Fehler ${response.status}.`);
+      throw new Error(message || `Der Server meldet Fehler ${response.status}.`);
     }
     return result;
   }
